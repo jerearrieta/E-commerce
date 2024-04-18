@@ -65,7 +65,6 @@ export const CartProvider = ({ children }) => {
   };
 
   const buyCart = async () => {
-    // Verificar si hay productos en el carrito
     if (cartItems.length > 0) {
       Swal.fire({
         title: "Deseas confirmar la compra?",
@@ -85,9 +84,15 @@ export const CartProvider = ({ children }) => {
               0
             );
       
-            Swal.fire(`El total de la compra fue de $${total}!`, "", "success");
-      
-            clearCart();
+            Swal.fire({
+              title: `El total de la compra fue de $${total}!`,
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            }).then(() => {
+              clearCart();
+              window.location.reload();
+            });
+
           } catch (error) {
             console.error('Error al procesar la compra:', error);
             Swal.fire("Error", "Hubo un problema al procesar la compra", "error");
